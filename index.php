@@ -1,29 +1,27 @@
 <?php
 require 'conexao.php';
 session_start();
-
-$mensagem = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $senha = trim($_POST['senha']);
-
-    $sql = "SELECT * FROM usuarios WHERE email = :email";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(array(':email' => $email));
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($usuario && password_verify($senha, $usuario['senha'])) {
-        $_SESSION['usuario'] = $usuario['nome'];
-        $_SESSION['tipo'] = $usuario['tipo'];
-        header("Location: painel.php");
-        exit;
-    } else {
-        $mensagem = "<p class='erro'>Email ou senha inválidos!</p>";
-    }
+$mensagem="";
+if($_SERVER['REQUEST_METHOD']==='POST'){
+    $email=trim($_POST['email']);
+    $senha=trim($_POST['senha']);
+ 
+$sql="SELECT * FROM usuarios WHERE email=:email";
+$stmt=$pdo->prepare($sql);
+$stmt->execute(array(':email' => $email));
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+if($usuario && password_verify($senha,$usuario['senha'])){
+    $_SESSION['usuario'] = $usuario['nome'];
+    $_SESSION['tipo'] = $usuario['tipo'];
+    header("Location:painel.php");
+    exit;
+}else{
+    $mensagem="<p class='erro'> Email ou senha inválidos!</p>";
+}
+ 
 }
 ?>
-
+ 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
