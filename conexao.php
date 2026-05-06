@@ -1,17 +1,21 @@
 <?php
 
-$host="localhost";
-$banco="biblioteca2";
-$usuario="root";
-$senha="";
+$host = "localhost";
+$banco = "biblioteca2";
+$usuario = "root";
+$senha = "";
 
-try{
-    $pdo = new PDO("mysql:host=$host;dbname=$banco;charset=utf8", $usuario, $senha);
+try {
+    $pdo = new PDO(
+        "mysql:host=$host;dbname=$banco;charset=utf8",
+        $usuario,
+        $senha
+    );
 
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}catch(PDOException $e){
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    //die - parar a execução do script
-    die ("Erro na conexão: " . $e->getMessage());
+} catch (PDOException $e) {
+    die("Erro na conexão: " . $e->getMessage());
 }
 ?>
